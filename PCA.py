@@ -6,7 +6,9 @@ def CovFeatureVecsVals(X):
   #归一化
   for i in range(len(X)):
     X[i,:] = (X[i,:] - mean_vec[:])
-  cov_mat = np.cov((X[:,0],X[:,1],X[:,2],X[:,3]))
+  cov_mat = np.cov(X.T)
+  print(X.T.shape)
+  print(cov_mat)
   eig_vals, eig_vecs = np.linalg.eig(cov_mat)
   #组成特征值和特征向量对(通过numpy.linalg.eig()计算出的特征值和特征向量是从大到小对应排好序的.)
   eig_pairs = [(eig_vals[i], eig_vecs[:,i]) for i in range(len(eig_vals))]
@@ -50,8 +52,8 @@ if __name__ == '__main__':
     plt.xlim([-1.5,1.5])
     plt.ylim([-4,4])
 
-    plt.xlabel('2 Componente Principal')
-    plt.ylabel('1 Componente Principal')
+    plt.xlabel('2 principal component')
+    plt.ylabel('1 principal component')
     plt.legend()
     plt.title('Dois componentes principais da Base de Dados Iris')
 
