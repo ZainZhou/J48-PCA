@@ -3,7 +3,7 @@ import numpy as np
 #协方差矩阵及其特征向量和特征值计算函数
 def CovFeatureVecsVals(X):
   mean_vec = np.mean(X, axis=0)
-  #归一化
+  #计算离差
   for i in range(len(X)):
     X[i,:] = (X[i,:] - mean_vec[:])
   cov_mat = np.cov(X.T)
