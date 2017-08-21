@@ -13,17 +13,19 @@ def CovFeatureVecsVals(X):
   return eig_pairs
   
 #降维矩阵计算函数：
-def ReduceDimension(eig_pairs):
-  matrix_w = np.hstack((eig_pairs[0][1].reshape(4,1),
-                        eig_pairs[1][1].reshape(4,1)))
+def ReduceDimension(eig_pairs,d):
+  matrix_w = np.hstack((eig_pairs[i][1].reshape(4,1) for i in range(d)))
   return matrix_w                
 #PCA降维调度函数
-def RunPCA(data):
+def RunPCA(data,d):
   X = np.array(data,dtype = 'float64')
+  d = int(d)
+  if d >= X.shape[1] or d <= 0:
+    return 0
   #计算协方差矩阵及其特征向量和特征值
   eig_pairs = CovFeatureVecsVals(X)
   #计算降维矩阵
-  matrix_w = ReduceDimension(eig_pairs)
+  matrix_w = ReduceDimension(eig_pairs,d)
   #降维
   Y = X.dot(matrix_w)
   return Y
@@ -36,21 +38,24 @@ if __name__ == '__main__':
     for i in f.readlines():
       data.append(i.strip().split(',')[:-1])
   #运行PCA调度函数
-  Y = RunPCA(data)
-  #画图
-  plt.plot(Y[0:49,1],Y[0:49,0], '^', markersize=7, color='red', alpha=0.5, label='Virginia')
-  plt.plot(Y[50:99,1],Y[50:99,0], 'o', markersize=7, color='blue', alpha=0.5, label='Versicolor')
-  plt.plot(Y[100:149,1],Y[100:149,0], 's', markersize=7, color='green', alpha=0.5, label='Setosa')
+  Y = RunPCA(data,2)
+  if type(Y) == type(0):
+      print("无法正确降维！")
+  else:
+    #画图
+    plt.plot(Y[0:49,1],Y[0:49,0], '^', markersize=7, color='red', alpha=0.5, label='Virginia')
+    plt.plot(Y[50:99,1],Y[50:99,0], 'o', markersize=7, color='blue', alpha=0.5, label='Versicolor')
+    plt.plot(Y[100:149,1],Y[100:149,0], 's', markersize=7, color='green', alpha=0.5, label='Setosa')
 
-  plt.xlim([-1.5,1.5])
-  plt.ylim([-4,4])
+    plt.xlim([-1.5,1.5])
+    plt.ylim([-4,4])
 
-  plt.xlabel('2 Componente Principal')
-  plt.ylabel('1 Componente Principal')
-  plt.legend()
-  plt.title('Dois componentes principais da Base de Dados Iris')
+    plt.xlabel('2 Componente Principal')
+    plt.ylabel('1 Componente Principal')
+    plt.legend()
+    plt.title('Dois componentes principais da Base de Dados Iris')
 
-  plt.tight_layout
-  plt.grid()
-  plt.show()
-  
+    plt.tight_layout
+    plt.grid()
+    plt.show()
+    
