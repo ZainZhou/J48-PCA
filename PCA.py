@@ -14,7 +14,9 @@ def CovFeatureVecsVals(X):
   
 #降维矩阵计算函数：
 def ReduceDimension(eig_pairs,d):
-  matrix_w = np.hstack((eig_pairs[i][1].reshape(4,1) for i in range(d)))
+  matrix_w = np.hstack(
+    (eig_pairs[i][1].reshape(4,1) for i in range(d))
+  )
   return matrix_w                
 #PCA降维调度函数
 def RunPCA(data,d):
@@ -43,7 +45,6 @@ if __name__ == '__main__':
       print("无法正确降维！")
   else:
     print(Y)
-    #画图
     plt.plot(Y[0:49,1],Y[0:49,0], '^', markersize=7, color='red', alpha=0.5, label='Virginia')
     plt.plot(Y[50:99,1],Y[50:99,0], 'o', markersize=7, color='blue', alpha=0.5, label='Versicolor')
     plt.plot(Y[100:149,1],Y[100:149,0], 's', markersize=7, color='green', alpha=0.5, label='Setosa')
@@ -54,7 +55,7 @@ if __name__ == '__main__':
     plt.xlabel('2 principal component')
     plt.ylabel('1 principal component')
     plt.legend()
-    plt.title('Dois componentes principais da Base de Dados Iris')
+    plt.title('Iris ReduceDimension images')
 
     plt.tight_layout
     plt.grid()
