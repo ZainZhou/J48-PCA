@@ -42,6 +42,7 @@ if __name__ == '__main__':
   if type(Y) == type(0):
       print("无法正确降维！")
   else:
+    print(Y)
     #画图
     plt.plot(Y[0:49,1],Y[0:49,0], '^', markersize=7, color='red', alpha=0.5, label='Virginia')
     plt.plot(Y[50:99,1],Y[50:99,0], 'o', markersize=7, color='blue', alpha=0.5, label='Versicolor')
